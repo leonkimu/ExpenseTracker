@@ -14,12 +14,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var widgetList = [
-    MainScreen(),
-    StatScreen(),
-  ];
-
   int index = 0;
+  late Color selectedItem = Colors.blue;
+  Color unselectedItem = Colors.grey;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,17 +28,25 @@ class _HomeScreenState extends State<HomeScreen> {
               setState(() {
                 index = value;
               });
-              print(value);
             },
-            backgroundColor: Colors.white,
             showSelectedLabels: false,
             showUnselectedLabels: false,
             elevation: 3,
-            items: const [
+            items:  [
               BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.home), label: 'Home'),
+                  icon: Icon(
+                    CupertinoIcons.home,
+                    color: index == 0 ? selectedItem : unselectedItem
+                    ),
+                     label: 'Home'
+                     ),
               BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.graph_square_fill), label: 'Stats')
+                  icon: Icon(
+                    CupertinoIcons.graph_square_fill,
+                    color: index == 1 ? selectedItem : unselectedItem
+                    ), 
+                    label: 'Stats'
+                    )
             ],
           ),
         ),
@@ -64,9 +70,6 @@ class _HomeScreenState extends State<HomeScreen> {
             child: const Icon(CupertinoIcons.add),
           ),
         ),
-        body: index == 0         
-        ? MainScreen() 
-        : StatScreen()
-        );
+        body: index == 0 ? const MainScreen() : const StatScreen());
   }
 }
